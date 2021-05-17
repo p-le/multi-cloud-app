@@ -5,6 +5,7 @@ import grpc
 import helloworld_pb2
 import helloworld_pb2_grpc
 
+
 def run(host, api_key):
     channel = grpc.insecure_channel(host)
     stub = helloworld_pb2_grpc.GreeterStub(channel)

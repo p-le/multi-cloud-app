@@ -6,8 +6,8 @@ VIET_OCR_IMAGE_TAG			:= 1.0.0
 VIET_OCR_ARTIFACT_IMAGE_TAG	:= 1.0.0
 
 VIET_OCR_ESPv2_IMAGE_NAME	:= viet-ocr-espv2
-VIET_OCR_ESPv2_IMAGE_TAG	:= 1.0.0
-VIET_OCR_ESPv2_ARTIFACT_IMAGE_TAG	:= 1.0.0
+VIET_OCR_ESPv2_IMAGE_TAG	:= 1.0.2
+VIET_OCR_ESPv2_ARTIFACT_IMAGE_TAG	:= 1.0.2
 
 VIET_OCR_BACKEND_IMAGE_NAME	:= viet-ocr-backend
 VIET_OCR_BACKEND_IMAGE_TAG	:= 1.0.0
@@ -110,3 +110,8 @@ viet-ocr-test-backend-image:
 .PHONE: viet-ocr-network
 viet-ocr-network:
 	docker network create viet-ocr
+
+.PHONE: viet-ocr-setup
+viet-ocr-setup:
+	cp -R $(BASE_PATH)/grpc/helloworld $(BASE_PATH)/gcp/cloudrun/viet-ocr-ESPv2/protos/helloworld
+	cp -R $(BASE_PATH)/grpc/helloworld $(BASE_PATH)/gcp/cloudrun/viet-ocr-backend/protos/helloworld

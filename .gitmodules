@@ -2,3 +2,6 @@
 	path = gcp/cloudrun/viet_ocr
 	url = git@bitbucket.org:fastcode99/viet_ocr.git
 	branch = feature/deploy-clourun
+[submodule "grpc"]
+	path = grpc
+	url = git@github.com:p-le/multi-cloud-grpc.git

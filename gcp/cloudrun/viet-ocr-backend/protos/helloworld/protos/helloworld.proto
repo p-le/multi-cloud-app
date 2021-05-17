@@ -1,8 +1,6 @@
 syntax = "proto3";
 
-package viet_ocr.api_gateway;
-
-import "google/protobuf/empty.proto";
+package demo.helloworld;
 
 service Greeter {
     rpc SayHello (HelloRequest) returns (HelloReply) {}
