@@ -1,0 +1,4 @@
+[submodule "viet_ocr"]
+	path = gcp/cloudrun/viet_ocr
+	url = git@bitbucket.org:fastcode99/viet_ocr.git
+	branch = feature/deploy-clourun

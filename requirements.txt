@@ -1,1 +1,3 @@
+boto3==1.17.73
 awsebcli==3.19.4
+grpcio==1.37.1
