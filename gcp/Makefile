@@ -21,7 +21,7 @@ gcloud-activate-configuration:
 
 .PHONY: gcloud-authenticate
 gcloud-authenticate:
-	@$(MAKE) gcloud-sdk ARG="config configurations create $(CONFIGURATION_NAME)"
+	@$(MAKE) gcloud-sdk ARG="config configurations create $(CONFIGURATION_NAME)" || true
 	@$(MAKE) gcloud-sdk ARG="auth login"
 	@$(MAKE) gcloud-activate-configuration PROJECT_ID=$(PROJECT_ID)
 
@@ -36,4 +36,6 @@ gcloud-authenticate-artifact-registry:
 	sudo chmod -R $(USER):$(USER) $(HOME)/.docker
 
 include $(BASE_PATH)/gcp/build-image.mk
-include $(BASE_PATH)/gcp/viet-ocr.mk
+include $(BASE_PATH)/gcp/project-viet-ocr.mk
+include $(BASE_PATH)/gcp/project-bookstore.mk
+include $(BASE_PATH)/gcp/project-idp-sql.mk

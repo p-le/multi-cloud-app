@@ -1,0 +1,291 @@
+{
+  "apis": [
+    {
+      "methods": [
+        {
+          "name": "SayHello",
+          "requestTypeUrl": "type.googleapis.com/demo.helloworld.HelloRequest",
+          "responseTypeUrl": "type.googleapis.com/demo.helloworld.HelloReply"
+        },
+        {
+          "name": "SayHelloAgain",
+          "requestTypeUrl": "type.googleapis.com/demo.helloworld.HelloRequest",
+          "responseTypeUrl": "type.googleapis.com/demo.helloworld.HelloReply"
+        }
+      ],
+      "name": "demo.helloworld.Greeter",
+      "sourceContext": {
+        "fileName": "helloworld.proto"
+      },
+      "syntax": "SYNTAX_PROTO3",
+      "version": "v1"
+    }
+  ],
+  "authentication": {},
+  "backend": {
+    "rules": [
+      {
+        "address": "grpcs://viet-ocr-espv2-srv-6122-7oocugmkoq-an.a.run.app",
+        "selector": "demo.helloworld.Greeter.SayHello"
+      },
+      {
+        "address": "grpcs://viet-ocr-espv2-srv-6122-7oocugmkoq-an.a.run.app",
+        "selector": "demo.helloworld.Greeter.SayHelloAgain"
+      }
+    ]
+  },
+  "configVersion": 3,
+  "control": {
+    "environment": "servicecontrol.googleapis.com"
+  },
+  "documentation": {},
+  "endpoints": [
+    {
+      "name": "viet-ocr-espv2-srv-6122-7oocugmkoq-an.a.run.app"
+    }
+  ],
+  "http": {},
+  "id": "2021-05-18r0",
+  "logging": {
+    "producerDestinations": [
+      {
+        "logs": [
+          "endpoints_log"
+        ],
+        "monitoredResource": "api"
+      }
+    ]
+  },
+  "logs": [
+    {
+      "name": "endpoints_log"
+    }
+  ],
+  "metrics": [
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        },
+        {
+          "key": "/protocol"
+        },
+        {
+          "key": "/response_code"
+        },
+        {
+          "key": "/response_code_class"
+        },
+        {
+          "key": "/status_code"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/request_count",
+      "type": "serviceruntime.googleapis.com/api/consumer/request_count",
+      "valueType": "INT64"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/total_latencies",
+      "type": "serviceruntime.googleapis.com/api/consumer/total_latencies",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "labels": [
+        {
+          "key": "/protocol"
+        },
+        {
+          "key": "/response_code"
+        },
+        {
+          "key": "/response_code_class"
+        },
+        {
+          "key": "/status_code"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/request_count",
+      "type": "serviceruntime.googleapis.com/api/producer/request_count",
+      "valueType": "INT64"
+    },
+    {
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/total_latencies",
+      "type": "serviceruntime.googleapis.com/api/producer/total_latencies",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        },
+        {
+          "key": "/quota_group_name"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/quota_used_count",
+      "type": "serviceruntime.googleapis.com/api/consumer/quota_used_count",
+      "valueType": "INT64"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/request_sizes",
+      "type": "serviceruntime.googleapis.com/api/consumer/request_sizes",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/response_sizes",
+      "type": "serviceruntime.googleapis.com/api/consumer/response_sizes",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/request_overhead_latencies",
+      "type": "serviceruntime.googleapis.com/api/producer/request_overhead_latencies",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/backend_latencies",
+      "type": "serviceruntime.googleapis.com/api/producer/backend_latencies",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/request_sizes",
+      "type": "serviceruntime.googleapis.com/api/producer/request_sizes",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/response_sizes",
+      "type": "serviceruntime.googleapis.com/api/producer/response_sizes",
+      "valueType": "DISTRIBUTION"
+    }
+  ],
+  "monitoredResources": [
+    {
+      "labels": [
+        {
+          "key": "cloud.googleapis.com/location"
+        },
+        {
+          "key": "cloud.googleapis.com/uid"
+        },
+        {
+          "key": "serviceruntime.googleapis.com/api_version"
+        },
+        {
+          "key": "serviceruntime.googleapis.com/api_method"
+        },
+        {
+          "key": "serviceruntime.googleapis.com/consumer_project"
+        },
+        {
+          "key": "cloud.googleapis.com/project"
+        },
+        {
+          "key": "cloud.googleapis.com/service"
+        }
+      ],
+      "type": "api"
+    }
+  ],
+  "monitoring": {
+    "consumerDestinations": [
+      {
+        "metrics": [
+          "serviceruntime.googleapis.com/api/consumer/request_count",
+          "serviceruntime.googleapis.com/api/consumer/quota_used_count",
+          "serviceruntime.googleapis.com/api/consumer/total_latencies",
+          "serviceruntime.googleapis.com/api/consumer/request_sizes",
+          "serviceruntime.googleapis.com/api/consumer/response_sizes"
+        ],
+        "monitoredResource": "api"
+      }
+    ],
+    "producerDestinations": [
+      {
+        "metrics": [
+          "serviceruntime.googleapis.com/api/producer/request_count",
+          "serviceruntime.googleapis.com/api/producer/total_latencies",
+          "serviceruntime.googleapis.com/api/producer/request_overhead_latencies",
+          "serviceruntime.googleapis.com/api/producer/backend_latencies",
+          "serviceruntime.googleapis.com/api/producer/request_sizes",
+          "serviceruntime.googleapis.com/api/producer/response_sizes"
+        ],
+        "monitoredResource": "api"
+      }
+    ]
+  },
+  "name": "viet-ocr-espv2-srv-6122-7oocugmkoq-an.a.run.app",
+  "producerProjectId": "viet-ocr-stage-8650711b",
+  "systemParameters": {},
+  "title": "Cloud Endpoints + Cloud Run gRPC",
+  "types": [
+    {
+      "fields": [
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "name",
+          "kind": "TYPE_STRING",
+          "name": "name",
+          "number": 1
+        }
+      ],
+      "name": "demo.helloworld.HelloRequest",
+      "sourceContext": {
+        "fileName": "helloworld.proto"
+      },
+      "syntax": "SYNTAX_PROTO3"
+    },
+    {
+      "fields": [
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "message",
+          "kind": "TYPE_STRING",
+          "name": "message",
+          "number": 1
+        }
+      ],
+      "name": "demo.helloworld.HelloReply",
+      "sourceContext": {
+        "fileName": "helloworld.proto"
+      },
+      "syntax": "SYNTAX_PROTO3"
+    }
+  ],
+  "usage": {
+    "rules": [
+      {
+        "allowUnregisteredCalls": true,
+        "selector": "demo.helloworld.Greeter.SayHello"
+      },
+      {
+        "allowUnregisteredCalls": true,
+        "selector": "demo.helloworld.Greeter.SayHelloAgain"
+      }
+    ]
+  }
+}

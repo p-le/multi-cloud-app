@@ -1,0 +1,54 @@
+version: '3'
+services:
+  idp-sql:
+    image: idp-sql:${TAG}
+    container_name: idp-sql
+    volumes:
+    - ./scripts/wait-for-it.sh:/usr/bin/wait-for-it.sh
+    networks:
+      - idp-sql
+    ports:
+      - "8080:8080"
+    environment:
+      - MYSQL_DEFAULT_AUTH=mysql_native_password
+      - DB_USER=connector
+      - DB_PASSWORD=n9b1cxfWT8lc
+      - DB_NAME=pets
+      - DB_HOST=cloud-sql-proxy:3306
+    command:
+      - wait-for-it.sh
+      - cloud-sql-proxy:3306
+      - --
+      - python
+      - src/main.py
+    depends_on:
+      # - mysql-db
+      - cloud-sql-proxy
+  cloud-sql-proxy:
+    image: gcr.io/cloudsql-docker/gce-proxy:1.22.0
+    container_name: cloud-sql-proxy
+    networks:
+    - idp-sql
+    volumes:
+    - ./misc:/config
+    ports:
+    - "3306:3306"
+    command:
+    - /cloud_sql_proxy
+    - -instances=${INSTANCE_CONNECTION_NAME}=tcp:0.0.0.0:3306
+    - -credential_file=/config/${CREDENTIAL_FILE}
+  # mysql-db:
+  #   image: mysql:8.0
+  #   container_name: mysql-db
+  #   networks:
+  #     - idp-sql
+  #   ports:
+  #     - "3306:3306"
+  #   command: --default-authentication-plugin=mysql_native_password
+  #   environment:
+  #     - MYSQL_USER=connector
+  #     - MYSQL_PASSWORD=connector@
+  #     - MYSQL_DATABASE=pets
+  #     - MYSQL_RANDOM_ROOT_PASSWORD=yes
+networks:
+  idp-sql:

@@ -1,0 +1,804 @@
+{
+  "apis": [
+    {
+      "methods": [
+        {
+          "name": "ListShelves",
+          "options": [
+            {
+              "name": "google.api.http",
+              "value": {
+                "@type": "type.googleapis.com/google.api.HttpRule",
+                "get": "/v1/shelves"
+              }
+            }
+          ],
+          "requestTypeUrl": "type.googleapis.com/google.protobuf.Empty",
+          "responseTypeUrl": "type.googleapis.com/endpoints.examples.bookstore.ListShelvesResponse"
+        },
+        {
+          "name": "CreateShelf",
+          "options": [
+            {
+              "name": "google.api.http",
+              "value": {
+                "@type": "type.googleapis.com/google.api.HttpRule",
+                "body": "shelf",
+                "post": "/v1/shelves"
+              }
+            }
+          ],
+          "requestTypeUrl": "type.googleapis.com/endpoints.examples.bookstore.CreateShelfRequest",
+          "responseTypeUrl": "type.googleapis.com/endpoints.examples.bookstore.Shelf"
+        },
+        {
+          "name": "GetShelf",
+          "options": [
+            {
+              "name": "google.api.http",
+              "value": {
+                "@type": "type.googleapis.com/google.api.HttpRule",
+                "get": "/v1/shelves/{shelf}"
+              }
+            }
+          ],
+          "requestTypeUrl": "type.googleapis.com/endpoints.examples.bookstore.GetShelfRequest",
+          "responseTypeUrl": "type.googleapis.com/endpoints.examples.bookstore.Shelf"
+        },
+        {
+          "name": "DeleteShelf",
+          "options": [
+            {
+              "name": "google.api.http",
+              "value": {
+                "@type": "type.googleapis.com/google.api.HttpRule",
+                "delete": "/v1/shelves/{shelf}"
+              }
+            }
+          ],
+          "requestTypeUrl": "type.googleapis.com/endpoints.examples.bookstore.DeleteShelfRequest",
+          "responseTypeUrl": "type.googleapis.com/google.protobuf.Empty"
+        },
+        {
+          "name": "ListBooks",
+          "options": [
+            {
+              "name": "google.api.http",
+              "value": {
+                "@type": "type.googleapis.com/google.api.HttpRule",
+                "get": "/v1/shelves/{shelf}/books"
+              }
+            }
+          ],
+          "requestTypeUrl": "type.googleapis.com/endpoints.examples.bookstore.ListBooksRequest",
+          "responseTypeUrl": "type.googleapis.com/endpoints.examples.bookstore.ListBooksResponse"
+        },
+        {
+          "name": "CreateBook",
+          "options": [
+            {
+              "name": "google.api.http",
+              "value": {
+                "@type": "type.googleapis.com/google.api.HttpRule",
+                "body": "book",
+                "post": "/v1/shelves/{shelf}/books"
+              }
+            }
+          ],
+          "requestTypeUrl": "type.googleapis.com/endpoints.examples.bookstore.CreateBookRequest",
+          "responseTypeUrl": "type.googleapis.com/endpoints.examples.bookstore.Book"
+        },
+        {
+          "name": "GetBook",
+          "options": [
+            {
+              "name": "google.api.http",
+              "value": {
+                "@type": "type.googleapis.com/google.api.HttpRule",
+                "get": "/v1/shelves/{shelf}/books/{book}"
+              }
+            }
+          ],
+          "requestTypeUrl": "type.googleapis.com/endpoints.examples.bookstore.GetBookRequest",
+          "responseTypeUrl": "type.googleapis.com/endpoints.examples.bookstore.Book"
+        },
+        {
+          "name": "DeleteBook",
+          "options": [
+            {
+              "name": "google.api.http",
+              "value": {
+                "@type": "type.googleapis.com/google.api.HttpRule",
+                "delete": "/v1/shelves/{shelf}/books/{book}"
+              }
+            }
+          ],
+          "requestTypeUrl": "type.googleapis.com/endpoints.examples.bookstore.DeleteBookRequest",
+          "responseTypeUrl": "type.googleapis.com/google.protobuf.Empty"
+        }
+      ],
+      "name": "endpoints.examples.bookstore.Bookstore",
+      "sourceContext": {
+        "fileName": "bookstore.proto"
+      },
+      "syntax": "SYNTAX_PROTO3",
+      "version": "v1"
+    }
+  ],
+  "authentication": {},
+  "backend": {
+    "rules": [
+      {
+        "address": "grpcs://bookstore-server-1c64-duw6v5yogq-an.a.run.app",
+        "selector": "endpoints.examples.bookstore.Bookstore.ListShelves"
+      },
+      {
+        "address": "grpcs://bookstore-server-1c64-duw6v5yogq-an.a.run.app",
+        "selector": "endpoints.examples.bookstore.Bookstore.CreateShelf"
+      },
+      {
+        "address": "grpcs://bookstore-server-1c64-duw6v5yogq-an.a.run.app",
+        "selector": "endpoints.examples.bookstore.Bookstore.GetShelf"
+      },
+      {
+        "address": "grpcs://bookstore-server-1c64-duw6v5yogq-an.a.run.app",
+        "selector": "endpoints.examples.bookstore.Bookstore.DeleteShelf"
+      },
+      {
+        "address": "grpcs://bookstore-server-1c64-duw6v5yogq-an.a.run.app",
+        "selector": "endpoints.examples.bookstore.Bookstore.ListBooks"
+      },
+      {
+        "address": "grpcs://bookstore-server-1c64-duw6v5yogq-an.a.run.app",
+        "selector": "endpoints.examples.bookstore.Bookstore.CreateBook"
+      },
+      {
+        "address": "grpcs://bookstore-server-1c64-duw6v5yogq-an.a.run.app",
+        "selector": "endpoints.examples.bookstore.Bookstore.GetBook"
+      },
+      {
+        "address": "grpcs://bookstore-server-1c64-duw6v5yogq-an.a.run.app",
+        "selector": "endpoints.examples.bookstore.Bookstore.DeleteBook"
+      }
+    ]
+  },
+  "configVersion": 3,
+  "control": {
+    "environment": "servicecontrol.googleapis.com"
+  },
+  "documentation": {
+    "rules": [
+      {
+        "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
+        "selector": "google.protobuf.Empty"
+      },
+      {
+        "description": "A shelf resource.",
+        "selector": "endpoints.examples.bookstore.Shelf"
+      },
+      {
+        "description": "A unique shelf id.",
+        "selector": "endpoints.examples.bookstore.Shelf.id"
+      },
+      {
+        "description": "A theme of the shelf (fiction, poetry, etc).",
+        "selector": "endpoints.examples.bookstore.Shelf.theme"
+      },
+      {
+        "description": "A book resource.",
+        "selector": "endpoints.examples.bookstore.Book"
+      },
+      {
+        "description": "A unique book id.",
+        "selector": "endpoints.examples.bookstore.Book.id"
+      },
+      {
+        "description": "An author of the book.",
+        "selector": "endpoints.examples.bookstore.Book.author"
+      },
+      {
+        "description": "A book title.",
+        "selector": "endpoints.examples.bookstore.Book.title"
+      },
+      {
+        "description": "Response to ListShelves call.",
+        "selector": "endpoints.examples.bookstore.ListShelvesResponse"
+      },
+      {
+        "description": "Shelves in the bookstore.",
+        "selector": "endpoints.examples.bookstore.ListShelvesResponse.shelves"
+      },
+      {
+        "description": "Request message for CreateShelf method.",
+        "selector": "endpoints.examples.bookstore.CreateShelfRequest"
+      },
+      {
+        "description": "The shelf resource to create.",
+        "selector": "endpoints.examples.bookstore.CreateShelfRequest.shelf"
+      },
+      {
+        "description": "Request message for GetShelf method.",
+        "selector": "endpoints.examples.bookstore.GetShelfRequest"
+      },
+      {
+        "description": "The ID of the shelf resource to retrieve.",
+        "selector": "endpoints.examples.bookstore.GetShelfRequest.shelf"
+      },
+      {
+        "description": "Request message for DeleteShelf method.",
+        "selector": "endpoints.examples.bookstore.DeleteShelfRequest"
+      },
+      {
+        "description": "The ID of the shelf to delete.",
+        "selector": "endpoints.examples.bookstore.DeleteShelfRequest.shelf"
+      },
+      {
+        "description": "Request message for ListBooks method.",
+        "selector": "endpoints.examples.bookstore.ListBooksRequest"
+      },
+      {
+        "description": "ID of the shelf which books to list.",
+        "selector": "endpoints.examples.bookstore.ListBooksRequest.shelf"
+      },
+      {
+        "description": "Response message to ListBooks method.",
+        "selector": "endpoints.examples.bookstore.ListBooksResponse"
+      },
+      {
+        "description": "The books on the shelf.",
+        "selector": "endpoints.examples.bookstore.ListBooksResponse.books"
+      },
+      {
+        "description": "Request message for CreateBook method.",
+        "selector": "endpoints.examples.bookstore.CreateBookRequest"
+      },
+      {
+        "description": "The ID of the shelf on which to create a book.",
+        "selector": "endpoints.examples.bookstore.CreateBookRequest.shelf"
+      },
+      {
+        "description": "A book resource to create on the shelf.",
+        "selector": "endpoints.examples.bookstore.CreateBookRequest.book"
+      },
+      {
+        "description": "Request message for GetBook method.",
+        "selector": "endpoints.examples.bookstore.GetBookRequest"
+      },
+      {
+        "description": "The ID of the shelf from which to retrieve a book.",
+        "selector": "endpoints.examples.bookstore.GetBookRequest.shelf"
+      },
+      {
+        "description": "The ID of the book to retrieve.",
+        "selector": "endpoints.examples.bookstore.GetBookRequest.book"
+      },
+      {
+        "description": "Request message for DeleteBook method.",
+        "selector": "endpoints.examples.bookstore.DeleteBookRequest"
+      },
+      {
+        "description": "The ID of the shelf from which to delete a book.",
+        "selector": "endpoints.examples.bookstore.DeleteBookRequest.shelf"
+      },
+      {
+        "description": "The ID of the book to delete.",
+        "selector": "endpoints.examples.bookstore.DeleteBookRequest.book"
+      },
+      {
+        "description": "A simple Bookstore API.\n\nThe API manages shelves and books resources. Shelves contain books.",
+        "selector": "endpoints.examples.bookstore.Bookstore"
+      },
+      {
+        "description": "Returns a list of all shelves in the bookstore.",
+        "selector": "endpoints.examples.bookstore.Bookstore.ListShelves"
+      },
+      {
+        "description": "Creates a new shelf in the bookstore.",
+        "selector": "endpoints.examples.bookstore.Bookstore.CreateShelf"
+      },
+      {
+        "description": "Returns a specific bookstore shelf.",
+        "selector": "endpoints.examples.bookstore.Bookstore.GetShelf"
+      },
+      {
+        "description": "Deletes a shelf, including all books that are stored on the shelf.",
+        "selector": "endpoints.examples.bookstore.Bookstore.DeleteShelf"
+      },
+      {
+        "description": "Returns a list of books on a shelf.",
+        "selector": "endpoints.examples.bookstore.Bookstore.ListBooks"
+      },
+      {
+        "description": "Creates a new book.",
+        "selector": "endpoints.examples.bookstore.Bookstore.CreateBook"
+      },
+      {
+        "description": "Returns a specific book.",
+        "selector": "endpoints.examples.bookstore.Bookstore.GetBook"
+      },
+      {
+        "description": "Deletes a book from a shelf.",
+        "selector": "endpoints.examples.bookstore.Bookstore.DeleteBook"
+      }
+    ]
+  },
+  "endpoints": [
+    {
+      "name": "bookstore-server-1c64-duw6v5yogq-an.a.run.app"
+    }
+  ],
+  "http": {
+    "rules": [
+      {
+        "get": "/v1/shelves",
+        "selector": "endpoints.examples.bookstore.Bookstore.ListShelves"
+      },
+      {
+        "body": "shelf",
+        "post": "/v1/shelves",
+        "selector": "endpoints.examples.bookstore.Bookstore.CreateShelf"
+      },
+      {
+        "get": "/v1/shelves/{shelf}",
+        "selector": "endpoints.examples.bookstore.Bookstore.GetShelf"
+      },
+      {
+        "delete": "/v1/shelves/{shelf}",
+        "selector": "endpoints.examples.bookstore.Bookstore.DeleteShelf"
+      },
+      {
+        "get": "/v1/shelves/{shelf}/books",
+        "selector": "endpoints.examples.bookstore.Bookstore.ListBooks"
+      },
+      {
+        "body": "book",
+        "post": "/v1/shelves/{shelf}/books",
+        "selector": "endpoints.examples.bookstore.Bookstore.CreateBook"
+      },
+      {
+        "get": "/v1/shelves/{shelf}/books/{book}",
+        "selector": "endpoints.examples.bookstore.Bookstore.GetBook"
+      },
+      {
+        "delete": "/v1/shelves/{shelf}/books/{book}",
+        "selector": "endpoints.examples.bookstore.Bookstore.DeleteBook"
+      }
+    ]
+  },
+  "id": "2021-05-18r0",
+  "logging": {
+    "producerDestinations": [
+      {
+        "logs": [
+          "endpoints_log"
+        ],
+        "monitoredResource": "api"
+      }
+    ]
+  },
+  "logs": [
+    {
+      "name": "endpoints_log"
+    }
+  ],
+  "metrics": [
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        },
+        {
+          "key": "/protocol"
+        },
+        {
+          "key": "/response_code"
+        },
+        {
+          "key": "/response_code_class"
+        },
+        {
+          "key": "/status_code"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/request_count",
+      "type": "serviceruntime.googleapis.com/api/consumer/request_count",
+      "valueType": "INT64"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/total_latencies",
+      "type": "serviceruntime.googleapis.com/api/consumer/total_latencies",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "labels": [
+        {
+          "key": "/protocol"
+        },
+        {
+          "key": "/response_code"
+        },
+        {
+          "key": "/response_code_class"
+        },
+        {
+          "key": "/status_code"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/request_count",
+      "type": "serviceruntime.googleapis.com/api/producer/request_count",
+      "valueType": "INT64"
+    },
+    {
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/total_latencies",
+      "type": "serviceruntime.googleapis.com/api/producer/total_latencies",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        },
+        {
+          "key": "/quota_group_name"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/quota_used_count",
+      "type": "serviceruntime.googleapis.com/api/consumer/quota_used_count",
+      "valueType": "INT64"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/request_sizes",
+      "type": "serviceruntime.googleapis.com/api/consumer/request_sizes",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "labels": [
+        {
+          "key": "/credential_id"
+        }
+      ],
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/consumer/response_sizes",
+      "type": "serviceruntime.googleapis.com/api/consumer/response_sizes",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/request_overhead_latencies",
+      "type": "serviceruntime.googleapis.com/api/producer/request_overhead_latencies",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/backend_latencies",
+      "type": "serviceruntime.googleapis.com/api/producer/backend_latencies",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/request_sizes",
+      "type": "serviceruntime.googleapis.com/api/producer/request_sizes",
+      "valueType": "DISTRIBUTION"
+    },
+    {
+      "metricKind": "DELTA",
+      "name": "serviceruntime.googleapis.com/api/producer/response_sizes",
+      "type": "serviceruntime.googleapis.com/api/producer/response_sizes",
+      "valueType": "DISTRIBUTION"
+    }
+  ],
+  "monitoredResources": [
+    {
+      "labels": [
+        {
+          "key": "cloud.googleapis.com/location"
+        },
+        {
+          "key": "cloud.googleapis.com/uid"
+        },
+        {
+          "key": "serviceruntime.googleapis.com/api_version"
+        },
+        {
+          "key": "serviceruntime.googleapis.com/api_method"
+        },
+        {
+          "key": "serviceruntime.googleapis.com/consumer_project"
+        },
+        {
+          "key": "cloud.googleapis.com/project"
+        },
+        {
+          "key": "cloud.googleapis.com/service"
+        }
+      ],
+      "type": "api"
+    }
+  ],
+  "monitoring": {
+    "consumerDestinations": [
+      {
+        "metrics": [
+          "serviceruntime.googleapis.com/api/consumer/request_count",
+          "serviceruntime.googleapis.com/api/consumer/quota_used_count",
+          "serviceruntime.googleapis.com/api/consumer/total_latencies",
+          "serviceruntime.googleapis.com/api/consumer/request_sizes",
+          "serviceruntime.googleapis.com/api/consumer/response_sizes"
+        ],
+        "monitoredResource": "api"
+      }
+    ],
+    "producerDestinations": [
+      {
+        "metrics": [
+          "serviceruntime.googleapis.com/api/producer/request_count",
+          "serviceruntime.googleapis.com/api/producer/total_latencies",
+          "serviceruntime.googleapis.com/api/producer/request_overhead_latencies",
+          "serviceruntime.googleapis.com/api/producer/backend_latencies",
+          "serviceruntime.googleapis.com/api/producer/request_sizes",
+          "serviceruntime.googleapis.com/api/producer/response_sizes"
+        ],
+        "monitoredResource": "api"
+      }
+    ]
+  },
+  "name": "bookstore-server-1c64-duw6v5yogq-an.a.run.app",
+  "producerProjectId": "multicloud-architect-b5e6e149",
+  "systemParameters": {},
+  "title": "Bookstore Server gRPC API",
+  "types": [
+    {
+      "name": "google.protobuf.Empty",
+      "sourceContext": {
+        "fileName": "google/protobuf/empty.proto"
+      },
+      "syntax": "SYNTAX_PROTO3"
+    },
+    {
+      "fields": [
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "id",
+          "kind": "TYPE_INT64",
+          "name": "id",
+          "number": 1
+        },
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "theme",
+          "kind": "TYPE_STRING",
+          "name": "theme",
+          "number": 2
+        }
+      ],
+      "name": "endpoints.examples.bookstore.Shelf",
+      "sourceContext": {
+        "fileName": "bookstore.proto"
+      },
+      "syntax": "SYNTAX_PROTO3"
+    },
+    {
+      "fields": [
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "id",
+          "kind": "TYPE_INT64",
+          "name": "id",
+          "number": 1
+        },
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "author",
+          "kind": "TYPE_STRING",
+          "name": "author",
+          "number": 2
+        },
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "title",
+          "kind": "TYPE_STRING",
+          "name": "title",
+          "number": 3
+        }
+      ],
+      "name": "endpoints.examples.bookstore.Book",
+      "sourceContext": {
+        "fileName": "bookstore.proto"
+      },
+      "syntax": "SYNTAX_PROTO3"
+    },
+    {
+      "fields": [
+        {
+          "cardinality": "CARDINALITY_REPEATED",
+          "jsonName": "shelves",
+          "kind": "TYPE_MESSAGE",
+          "name": "shelves",
+          "number": 1,
+          "typeUrl": "type.googleapis.com/endpoints.examples.bookstore.Shelf"
+        }
+      ],
+      "name": "endpoints.examples.bookstore.ListShelvesResponse",
+      "sourceContext": {
+        "fileName": "bookstore.proto"
+      },
+      "syntax": "SYNTAX_PROTO3"
+    },
+    {
+      "fields": [
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "shelf",
+          "kind": "TYPE_MESSAGE",
+          "name": "shelf",
+          "number": 1,
+          "typeUrl": "type.googleapis.com/endpoints.examples.bookstore.Shelf"
+        }
+      ],
+      "name": "endpoints.examples.bookstore.CreateShelfRequest",
+      "sourceContext": {
+        "fileName": "bookstore.proto"
+      },
+      "syntax": "SYNTAX_PROTO3"
+    },
+    {
+      "fields": [
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "shelf",
+          "kind": "TYPE_INT64",
+          "name": "shelf",
+          "number": 1
+        }
+      ],
+      "name": "endpoints.examples.bookstore.GetShelfRequest",
+      "sourceContext": {
+        "fileName": "bookstore.proto"
+      },
+      "syntax": "SYNTAX_PROTO3"
+    },
+    {
+      "fields": [
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "shelf",
+          "kind": "TYPE_INT64",
+          "name": "shelf",
+          "number": 1
+        }
+      ],
+      "name": "endpoints.examples.bookstore.DeleteShelfRequest",
+      "sourceContext": {
+        "fileName": "bookstore.proto"
+      },
+      "syntax": "SYNTAX_PROTO3"
+    },
+    {
+      "fields": [
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "shelf",
+          "kind": "TYPE_INT64",
+          "name": "shelf",
+          "number": 1
+        }
+      ],
+      "name": "endpoints.examples.bookstore.ListBooksRequest",
+      "sourceContext": {
+        "fileName": "bookstore.proto"
+      },
+      "syntax": "SYNTAX_PROTO3"
+    },
+    {
+      "fields": [
+        {
+          "cardinality": "CARDINALITY_REPEATED",
+          "jsonName": "books",
+          "kind": "TYPE_MESSAGE",
+          "name": "books",
+          "number": 1,
+          "typeUrl": "type.googleapis.com/endpoints.examples.bookstore.Book"
+        }
+      ],
+      "name": "endpoints.examples.bookstore.ListBooksResponse",
+      "sourceContext": {
+        "fileName": "bookstore.proto"
+      },
+      "syntax": "SYNTAX_PROTO3"
+    },
+    {
+      "fields": [
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "shelf",
+          "kind": "TYPE_INT64",
+          "name": "shelf",
+          "number": 1
+        },
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "book",
+          "kind": "TYPE_MESSAGE",
+          "name": "book",
+          "number": 2,
+          "typeUrl": "type.googleapis.com/endpoints.examples.bookstore.Book"
+        }
+      ],
+      "name": "endpoints.examples.bookstore.CreateBookRequest",
+      "sourceContext": {
+        "fileName": "bookstore.proto"
+      },
+      "syntax": "SYNTAX_PROTO3"
+    },
+    {
+      "fields": [
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "shelf",
+          "kind": "TYPE_INT64",
+          "name": "shelf",
+          "number": 1
+        },
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "book",
+          "kind": "TYPE_INT64",
+          "name": "book",
+          "number": 2
+        }
+      ],
+      "name": "endpoints.examples.bookstore.GetBookRequest",
+      "sourceContext": {
+        "fileName": "bookstore.proto"
+      },
+      "syntax": "SYNTAX_PROTO3"
+    },
+    {
+      "fields": [
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "shelf",
+          "kind": "TYPE_INT64",
+          "name": "shelf",
+          "number": 1
+        },
+        {
+          "cardinality": "CARDINALITY_OPTIONAL",
+          "jsonName": "book",
+          "kind": "TYPE_INT64",
+          "name": "book",
+          "number": 2
+        }
+      ],
+      "name": "endpoints.examples.bookstore.DeleteBookRequest",
+      "sourceContext": {
+        "fileName": "bookstore.proto"
+      },
+      "syntax": "SYNTAX_PROTO3"
+    }
+  ],
+  "usage": {
+    "rules": [
+      {
+        "allowUnregisteredCalls": true,
+        "selector": "endpoints.examples.bookstore.Bookstore.ListShelves"
+      }
+    ]
+  }
+}
