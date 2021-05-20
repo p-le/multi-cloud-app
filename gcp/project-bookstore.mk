@@ -40,8 +40,8 @@ bookstore-build-server-image:
 
 .PHONE: bookstore-build-gateway-image
 bookstore-build-gateway-image:
-	$(eval BOOKSTORE_ENDPOINT_SERVICE_NAME := $(shell $(MAKE) gcloud-sdk ARG="endpoints services list" | grep bookstore))
-	$(eval BOOKSTORE_ENDPOINT_CONFIG_ID := $(shell $(MAKE) gcloud-sdk ARG="endpoints configs list --service=${BOOKSTORE_ENDPOINT_SERVICE_NAME} --limit 1 --format=\"value(id.scope())\""))
+	$(eval BOOKSTORE_ENDPOINT_SERVICE_NAME := $(shell $(MAKE) gcloud-sdk CMD="gcloud endpoints services list" | grep bookstore))
+	$(eval BOOKSTORE_ENDPOINT_CONFIG_ID := $(shell $(MAKE) gcloud-sdk CMD="gcloud endpoints configs list --service=${BOOKSTORE_ENDPOINT_SERVICE_NAME} --limit 1 --format=\"value(id.scope())\""))
 	cd $(BOOKSTORE_GATEWAY_SRC) && \
 		docker image build -t \
 		$(BOOKSTORE_GATEWAY_IMG):$(BOOKSTORE_ENDPOINT_SERVICE_NAME)-$(BOOKSTORE_ENDPOINT_CONFIG_ID)-$(BOOKSTORE_GATEWAY_IMG_TAG) .
@@ -97,8 +97,8 @@ bookstore-push-client-image: bookstore-build-client-image
 
 .PHONE: bookstore-push-gateway-image
 bookstore-push-gateway-image: bookstore-build-gateway-image
-	$(eval BOOKSTORE_ENDPOINT_SERVICE_NAME := $(shell $(MAKE) gcloud-sdk ARG="endpoints services list" | grep bookstore))
-	$(eval BOOKSTORE_ENDPOINT_CONFIG_ID := $(shell $(MAKE) gcloud-sdk ARG="endpoints configs list --service=${BOOKSTORE_ENDPOINT_SERVICE_NAME} --limit 1 --format=\"value(id.scope())\""))
+	$(eval BOOKSTORE_ENDPOINT_SERVICE_NAME := $(shell $(MAKE) gcloud-sdk CMD="gcloud endpoints services list" | grep bookstore))
+	$(eval BOOKSTORE_ENDPOINT_CONFIG_ID := $(shell $(MAKE) gcloud-sdk CMD="gcloud endpoints configs list --service=${BOOKSTORE_ENDPOINT_SERVICE_NAME} --limit 1 --format=\"value(id.scope())\""))
 	@$(MAKE) gcloud-activate-configuration PROJECT_ID=$(BOOKSTORE_PROJECT_ID)
 	docker image tag \
 		$(BOOKSTORE_GATEWAY_IMG):$(BOOKSTORE_ENDPOINT_SERVICE_NAME)-$(BOOKSTORE_ENDPOINT_CONFIG_ID)-$(BOOKSTORE_GATEWAY_IMG_TAG) \
@@ -109,11 +109,11 @@ bookstore-push-gateway-image: bookstore-build-gateway-image
 
 .PHONE: bookstore-download-endpoint-service-config
 bookstore-download-endpoint-service-config:
-	$(eval BOOKSTORE_ENDPOINT_SERVICE_NAME := $(shell $(MAKE) gcloud-sdk ARG="endpoints services list" | grep bookstore))
-	$(eval BOOKSTORE_ENDPOINT_CONFIG_ID := $(shell $(MAKE) gcloud-sdk ARG="endpoints configs list --service=${BOOKSTORE_ENDPOINT_SERVICE_NAME} --limit 1 --format=\"value(id.scope())\""))
+	$(eval BOOKSTORE_ENDPOINT_SERVICE_NAME := $(shell $(MAKE) gcloud-sdk CMD="gcloud endpoints services list" | grep bookstore))
+	$(eval BOOKSTORE_ENDPOINT_CONFIG_ID := $(shell $(MAKE) gcloud-sdk CMD="gcloud endpoints configs list --service=${BOOKSTORE_ENDPOINT_SERVICE_NAME} --limit 1 --format=\"value(id.scope())\""))
 
 	$(MAKE) gcloud-activate-configuration PROJECT_ID=$(BOOKSTORE_PROJECT_ID)
-	$(MAKE) gcloud-sdk ARG=" \
+	$(MAKE) gcloud-sdk CMD="gcloud  \
 		endpoints configs describe \
 		$(BOOKSTORE_ENDPOINT_CONFIG_ID) \
 		--service $(BOOKSTORE_ENDPOINT_SERVICE_NAME) \

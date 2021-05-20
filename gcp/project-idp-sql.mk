@@ -35,7 +35,7 @@ idp-sql-build-image:
 .PHONE: idp-sql-test-image
 idp-sql-test-image: INSTANCE_CONNECTION_NAME := multicloud-architect-b5e6e149:asia-northeast1:idp-sql-instance-e99d
 idp-sql-test-image: idp-sql-build-image
-	@$(MAKE) gcloud-sdk ARG="secrets versions access latest --secret=$(IDP_SQL_CLOUD_SQL_PROXY_SA_KEY)" | grep -v make > $(IDP_SQL_SRC)/misc/$(addsuffix .json, $(IDP_SQL_CLOUD_SQL_PROXY_SA_KEY))
+	@$(MAKE) gcloud-sdk CMD="gcloud secrets versions access latest --secret=$(IDP_SQL_CLOUD_SQL_PROXY_SA_KEY)" | grep -v make > $(IDP_SQL_SRC)/misc/$(addsuffix .json, $(IDP_SQL_CLOUD_SQL_PROXY_SA_KEY))
 	cd $(IDP_SQL_SRC) && \
 		CREDENTIAL_FILE=$(addsuffix .json, $(IDP_SQL_CLOUD_SQL_PROXY_SA_KEY)) \
 		TAG=$(IDP_SQL_IMG_TAG) \
