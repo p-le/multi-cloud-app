@@ -18,14 +18,14 @@ system-package-artifact-registry-authenticate:
 		HOSTNAMES=asia-northeast1-docker.pkg.dev
 
 
-.PHONE: system-package-build-image
+.PHONY: system-package-build-image
 system-package-build-image:
 	cd $(SYSTEM_PACKAGE_SRC) && \
 		docker image build -t \
 		$(SYSTEM_PACKAGE_IMG):$(SYSTEM_PACKAGE_IMG_TAG) .
 
 
-.PHONE: system-package-test-image
+.PHONY: system-package-test-image
 system-package-test-image: PORT := 8080
 system-package-test-image: system-package-build-image
 	@cd $(SYSTEM_PACKAGE_SRC) && \
@@ -36,7 +36,7 @@ system-package-test-image: system-package-build-image
 			--name system-package \
 			$(SYSTEM_PACKAGE_IMG):$(SYSTEM_PACKAGE_IMG_TAG)
 
-.PHONE: system-package-test-emulator
+.PHONY: system-package-test-emulator
 system-package-test-emulator: PORT := 8085
 system-package-test-emulator:
 	@docker container run \
@@ -50,7 +50,7 @@ system-package-test-emulator:
 			--host-port=0.0.0.0:$(PORT)
 
 
-.PHONE: system-package-push-image
+.PHONY: system-package-push-image
 system-package-push-image: system-package-build-image
 	@$(MAKE) gcloud-activate-configuration PROJECT_ID=$(SYSTEM_PACKAGE_PROJECT_ID)
 	docker image tag \

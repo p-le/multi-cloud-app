@@ -1,11 +1,15 @@
-.PHONE: gcloud-sdk
+ARTIFACT_REPOSITORY_REGION 	:= asia-northeast1
+ARTIFACT_REPOSITORY_NAME 	:= cloud-native-registry
+
+.PHONY: gcloud-sdk
 gcloud-sdk:
 	@docker container run -it --rm \
 		-v $(BASE_PATH)/miscs/gcp/config:/gcloud/config \
 		-v $(BASE_PATH)/miscs/gcp/credentials:/gcloud/credentials \
+		-v ${BASE_PATH}/miscs/kube:/root/.kube \
 		$(ADDITIONAL_VOLUMES) \
 		-e CLOUDSDK_CONFIG=/gcloud/config \
-		google/cloud-sdk:$(GCLOUD_SDK_VERSION) $(CMD)
+		gcr.io/google.com/cloudsdktool/cloud-sdk:$(GCLOUD_SDK_VERSION) $(CMD)
 
 
 .PHONY: gcloud-build-image
@@ -48,10 +52,20 @@ gcloud-authenticate-artifact-registry:
 gcloud-configurations:
 	@$(MAKE) gcloud-sdk CMD="gcloud config configurations list"
 
+.PHONY: gcloud-gke-clusters
+gcloud-gke-clusters:
+	@$(MAKE) gcloud-sdk CMD="gcloud container clusters list"
 
 include $(BASE_PATH)/gcp/project-viet-ocr.mk
 include $(BASE_PATH)/gcp/project-bookstore.mk
 include $(BASE_PATH)/gcp/project-idp-sql.mk
-include $(BASE_PATH)/gcp/project-pubsub.mk
+include $(BASE_PATH)/gcp/project-pubsub-app.mk
 include $(BASE_PATH)/gcp/project-system-package.mk
 include $(BASE_PATH)/gcp/project-workflow.mk
+include $(BASE_PATH)/gcp/project-image-processing.mk
+include $(BASE_PATH)/gcp/project-anthos.mk
+include $(BASE_PATH)/gcp/project-hello-app.mk
+include $(BASE_PATH)/gcp/project-guestbook.mk
+include $(BASE_PATH)/gcp/project-wordpress-cloudsql.mk
+include $(BASE_PATH)/gcp/project-django.mk
+include $(BASE_PATH)/gcp/project-viet-soccer.mk

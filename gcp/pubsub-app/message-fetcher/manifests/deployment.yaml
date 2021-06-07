@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pubsub-message-fetcher
+spec:
+  selector:
+    matchLabels:
+      app: pubsub-message-fetcher
+  template:
+    metadata:
+      labels:
+        app: pubsub-message-fetcher
+    spec:
+      # volumes:
+      # - name: google-cloud-key
+      #   secret:
+      #     secretName: pubsub-key
+      containers:
+      - name: subscriber
+        image: asia-northeast1-docker.pkg.dev/multicloud-architect-b5e6e149/cloud-native-registry/pubsub-message-fetcher:1.0.5
+        # volumeMounts:
+        # - name: google-cloud-key
+        #   mountPath: /var/secrets/google
+        env:
+        - name: PUBSUB_PROJECT_ID
+          value: multicloud-architect-b5e6e149
+        - name: PUBSUB_SUBSCRIPTION
+          value: demo-pull-subscription

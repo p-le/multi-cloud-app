@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: polls
+  labels:
+    app: polls
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: polls
+  template:
+    metadata:
+      labels:
+        app: polls
+    spec:
+      containers:
+      # Main Container: Django Polls App
+      - name: polls-app
+        image: asia-northeast1-docker.pkg.dev/multicloud-architect-b5e6e149/cloud-native-registry/django-poll-app:1.0.2
+        env:
+          - name: ENV
+            value: prod
+          - name: PORT
+            value: "8080"
+          - name: DB_HOST
+            value: 127.0.0.1
+          - name: STATIC_GCS_BUCKET
+            value: static-assets-a708
+          - name: SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: django-secret-key
+                key: secret_key
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: cloudsql-db-credentials
+                key: db_name
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: cloudsql-db-credentials
+                key: db_user
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: cloudsql-db-credentials
+                key: db_password
+        ports:
+          - name: django
+            containerPort: 8080
+      # Sidecar Container: CloudSQL-Proxy
+      - name: cloudsql-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:1.22.0
+        command: ["/cloud_sql_proxy"]
+        args:
+          - -instances=$(INSTANCE_CONNECTION_NAME)=tcp:0.0.0.0:3306
+          - -credential_file=/secrets/sa-key/gks-sa-key.json
+        env:
+          - name: INSTANCE_CONNECTION_NAME
+            valueFrom:
+              secretKeyRef:
+                name: cloudsql-db-connection
+                key: db_connection
+        ports:
+          - name: mysql
+            containerPort: 3306
+        volumeMounts:
+          - name: sa-key
+            mountPath: /secrets/sa-key
+            readOnly: true
+          - name: ssl-certs
+            mountPath: /etc/ssl/certs
+          - name: cloudsql-data
+            mountPath: /cloudsql
+      volumes:
+        - name: sa-key
+          secret:
+            secretName: cloudsql-sa-key
+        - name: ssl-certs
+          hostPath:
+            path: /etc/ssl/certs
+        - name: cloudsql-data
+          emptyDir: {}

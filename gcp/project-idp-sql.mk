@@ -19,20 +19,20 @@ idp-sql-artifact-registry-authenticate:
 		HOSTNAMES=asia-northeast1-docker.pkg.dev
 
 
-# .PHONE: idp-sql-setup
+# .PHONY: idp-sql-setup
 # idp-sql-setup:
 # 	cp -R $(BASE_PATH)/grpc/idp-sql/generated_pb2/*.py $(IDP_SQL_CLIENT_SRC)/
 # 	cp -R $(BASE_PATH)/grpc/idp-sql/generated_pb2/*.py $(IDP_SQL_SERVER_SRC)/
 
 
-.PHONE: idp-sql-build-image
+.PHONY: idp-sql-build-image
 idp-sql-build-image:
 	cd $(IDP_SQL_SRC) && \
 		docker image build -t \
 		$(IDP_SQL_IMG):$(IDP_SQL_IMG_TAG) .
 
 
-.PHONE: idp-sql-test-image
+.PHONY: idp-sql-test-image
 idp-sql-test-image: INSTANCE_CONNECTION_NAME := multicloud-architect-b5e6e149:asia-northeast1:idp-sql-instance-e99d
 idp-sql-test-image: idp-sql-build-image
 	@$(MAKE) gcloud-sdk CMD="gcloud secrets versions access latest --secret=$(IDP_SQL_CLOUD_SQL_PROXY_SA_KEY)" | grep -v make > $(IDP_SQL_SRC)/misc/$(addsuffix .json, $(IDP_SQL_CLOUD_SQL_PROXY_SA_KEY))
@@ -43,7 +43,7 @@ idp-sql-test-image: idp-sql-build-image
 		docker-compose up --remove-orphans
 
 
-.PHONE: idp-sql-push-image
+.PHONY: idp-sql-push-image
 idp-sql-push-image: idp-sql-build-image
 	@$(MAKE) gcloud-activate-configuration PROJECT_ID=$(IDP_SQL_PROJECT_ID)
 	docker image tag \

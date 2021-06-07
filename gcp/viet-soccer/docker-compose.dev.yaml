@@ -1,0 +1,80 @@
+version: '3'
+services:
+
+  download-api:
+    container_name: download-api
+    build:
+      context: download-api
+      dockerfile: Dockerfile
+    volumes:
+      - ./dist/download:/dist
+    environment:
+      - PORT=8080
+    ports:
+      - 8080:8080
+
+
+  summary-api:
+    container_name: summary-api
+    build:
+      context: summary-api
+      dockerfile: Dockerfile
+    volumes:
+      - ./dist/download:/dist/download
+      - ./dist/summary:/dist/summary
+    environment:
+      - PORT=8081
+    ports:
+      - 8081:8081
+
+
+  firestore-api:
+    container_name: firestore-api
+    build:
+      context: firestore-api
+      dockerfile: Dockerfile
+    volumes:
+      - ./credentials:/credentials
+    environment:
+      - PORT=50051
+      - GOOGLE_APPLICATION_CREDENTIALS=/credentials/firestore-sa-key.json
+    ports:
+      - 50051:50051
+
+
+  youtube-comment:
+    container_name: youtube-comment
+    build:
+      context: youtube-comment
+      dockerfile: Dockerfile
+    volumes:
+      - ./credentials:/credentials
+    environment:
+      - PORT=8084
+      - OAUTHLIB_INSECURE_TRANSPORT=1  # Disable OAuthlib's HTTPS verification when running locally.
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1   # Pass Warning: Scope has changed on Dev Env
+      - PUBSUB_EMULATOR_HOST=pubsub-emulator:8086
+      - PROJECT_ID=${PROJECT}
+      - CLIENT_SECRET_FILE=/credentials/youtube-comment-client-secret.json
+      - FIREBASE_API_HOST=firestore-api
+      - FIREBASE_API_PORT=50051
+    ports:
+      - 8084:8084
+
+
+  youtube-upload:
+    container_name: youtube-upload
+    build:
+      context: youtube-upload
+      dockerfile: Dockerfile
+    volumes:
+      - ./credentials:/credentials
+    environment:
+      - PORT=8085
+      - OAUTHLIB_INSECURE_TRANSPORT=1  # Disable OAuthlib's HTTPS verification when running locally.
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1   # Pass Warning: Scope has changed on Dev Env
+      - PUBSUB_EMULATOR_HOST=pubsub-emulator:8086
+      - PROJECT_ID=${PROJECT}
+      - CLIENT_SECRET_FILE=/credentials/youtube-upload-client-secret.json
+    ports:
+      - 8085:8085

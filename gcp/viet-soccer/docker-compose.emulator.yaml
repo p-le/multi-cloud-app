@@ -1,0 +1,31 @@
+version: '3'
+services:
+
+  pubsub-emulator:
+    container_name: pubsub-emulator
+    build:
+      context: pubsub-emulator
+      dockerfile: Dockerfile
+      args:
+        GCLOUD_SDK_VERSION: 342.0.0-slim
+    ports:
+      - 8086:8086
+    command:
+      - --host-port=0.0.0.0:8086
+      - --project=${PROJECT}
+
+  pubsub-emulator-controller:
+    container_name: pubsub-emulator-controller
+    build:
+      context: pubsub-emulator-controller
+      dockerfile: Dockerfile
+      args:
+        GCLOUD_SDK_VERSION: 342.0.0-slim
+    environment:
+      - PORT=8087
+      - PUBSUB_EMULATOR_HOST=pubsub-emulator:8086
+      - PROJECT_ID=${PROJECT}
+      - YOUTUBE_COMMENT_ENDPOINT=http://youtube-comment:8084
+      - YOUTUBE_UPLOAD_ENDPOINT=http://youtube-upload:8085
+    ports:
+      - 8087:8087

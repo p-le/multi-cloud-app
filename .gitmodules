@@ -5,3 +5,4 @@
 [submodule "grpc"]
 	path = grpc
 	url = git@github.com:p-le/multi-cloud-grpc.git
+	branch = feature/viet-soccer

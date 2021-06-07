@@ -1,0 +1,58 @@
+version: '3'
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    networks:
+      - poll-app
+    ports:
+      - "3306:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_USER=connector
+      - MYSQL_PASSWORD=connector@
+      - MYSQL_DATABASE=polls
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+
+  poll-app:
+    image: ${IMAGE}:${TAG}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: poll-app
+    volumes:
+    - ./scripts/wait-for-it.sh:/usr/bin/wait-for-it.sh
+    - ./app:/app/app
+    - ./polls:/app/polls
+    networks:
+      - poll-app
+    ports:
+      - "8080:8080"
+    environment:
+      - MYSQL_DEFAULT_AUTH=mysql_native_password
+      - DB_USER=connector
+      - DB_PASSWORD=connector@
+      - DB_NAME=polls
+      - DB_HOST=mysql-db
+      - STATIC_GCS_BUCKET=static-assets-a708
+      - SECRET_KEY=aep62
+      - SETTINGS_MODULE=app.prod_settings
+    command:
+      - wait-for-it.sh
+      - mysql-db:3306
+      - --
+      - gunicorn
+      - --bind
+      - :8080
+      - --workers
+      - "1"
+      - --threads
+      - "8"
+      - --timeout
+      - "0"
+      - app.wsgi
+    depends_on:
+      - mysql-db
+
+networks:
+  poll-app:

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-v2-deployment
+  labels:
+    app: hello-v2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-v2
+  template:
+    metadata:
+      labels:
+        app: hello-v2
+    spec:
+      containers:
+        - name: hello
+          image: asia-northeast1-docker.pkg.dev/multicloud-architect-b5e6e149/cloud-native-registry/hello-app:2.0.0
+          env:
+            - name: PORT
+              value: "8080"
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /hello
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          resources:
+            limits:
+              cpu: 250m
+            requests:
+              cpu: 125m

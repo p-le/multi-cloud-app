@@ -1,0 +1,9 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: basic-ingress
+  annotations:
+spec:
+  backend:
+    serviceName: hello
+    servicePort: 8080

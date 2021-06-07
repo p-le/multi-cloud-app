@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudsql-proxy
+  labels:
+    app: clousql-proxy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: clousql-proxy
+  template:
+    metadata:
+      labels:
+        app: clousql-proxy
+    spec:
+      containers:
+        - image: gcr.io/cloudsql-docker/gce-proxy:1.22.0
+          name: clousql-proxy
+          command: ["/cloud_sql_proxy"]
+          args:
+            - -instances=$(INSTANCE_CONNECTION_NAME)=tcp:0.0.0.0:3306
+            - -credential_file=/etc/sa-key/gks-sa-key.json
+          env:
+            - name: INSTANCE_CONNECTION_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-db-connection
+                  key: DB_CONNECTION
+          ports:
+            - name: mysql
+              containerPort: 3306
+          volumeMounts:
+            - name: sa-key
+              readOnly: true
+              mountPath: /etc/sa-key
+      volumes:
+        - name: sa-key
+          secret:
+            secretName: cloudsql-sa-key

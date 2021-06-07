@@ -1,0 +1,32 @@
+version: '3'
+services:
+
+  download-api:
+    image: ${REPOSITORY}/${DOWNLOAD_API_IMG}:${DOWNLOAD_API_TAG}
+    build:
+      context: download-api
+      dockerfile: Dockerfile
+
+  summary-api:
+    image: ${REPOSITORY}/${SUMMARY_API_IMG}:${SUMMARY_API_TAG}
+    build:
+      context: summary-api
+      dockerfile: Dockerfile
+
+  # firestore-api:
+  #   image: ${REPOSITORY}/${DOWNLOAD_API_IMG}:${DOWNLOAD_API_TAG}
+  #   build:
+  #     context: firestore-api
+  #     dockerfile: Dockerfile
+
+  youtube-comment:
+    image: ${REPOSITORY}/${YOUTUBE_COMMENT_IMG}:${YOUTUBE_COMMENT_TAG}
+    build:
+      context: youtube-comment
+      dockerfile: Dockerfile
+
+  youtube-upload:
+    image: ${REPOSITORY}/${YOUTUBE_UPLOAD_IMG}:${YOUTUBE_UPLOAD_TAG}
+    build:
+      context: youtube-upload
+      dockerfile: Dockerfile

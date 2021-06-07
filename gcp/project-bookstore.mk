@@ -21,24 +21,24 @@ bookstore-artifact-registry-authenticate:
 		PROJECT_ID=$(BOOKSTORE_PROJECT_ID) \
 		HOSTNAMES=asia-northeast1-docker.pkg.dev
 
-.PHONE: bookstore-setup
+.PHONY: bookstore-setup
 bookstore-setup:
 	cp -R $(BASE_PATH)/grpc/bookstore/generated_pb2/*.py $(BOOKSTORE_CLIENT_SRC)/
 	cp -R $(BASE_PATH)/grpc/bookstore/generated_pb2/*.py $(BOOKSTORE_SERVER_SRC)/
 
-.PHONE: bookstore-build-client-image
+.PHONY: bookstore-build-client-image
 bookstore-build-client-image:
 	cd $(BOOKSTORE_CLIENT_SRC) && \
 		docker image build -t \
 		$(BOOKSTORE_CLIENT_IMG):$(BOOKSTORE_CLIENT_IMG_TAG) .
 
-.PHONE: bookstore-build-server-image
+.PHONY: bookstore-build-server-image
 bookstore-build-server-image:
 	cd $(BOOKSTORE_SERVER_SRC) && \
 		docker image build -t \
 		$(BOOKSTORE_SERVER_IMG):$(BOOKSTORE_SERVER_IMG_TAG) .
 
-.PHONE: bookstore-build-gateway-image
+.PHONY: bookstore-build-gateway-image
 bookstore-build-gateway-image:
 	$(eval BOOKSTORE_ENDPOINT_SERVICE_NAME := $(shell $(MAKE) gcloud-sdk CMD="gcloud endpoints services list" | grep bookstore))
 	$(eval BOOKSTORE_ENDPOINT_CONFIG_ID := $(shell $(MAKE) gcloud-sdk CMD="gcloud endpoints configs list --service=${BOOKSTORE_ENDPOINT_SERVICE_NAME} --limit 1 --format=\"value(id.scope())\""))
@@ -47,7 +47,7 @@ bookstore-build-gateway-image:
 		$(BOOKSTORE_GATEWAY_IMG):$(BOOKSTORE_ENDPOINT_SERVICE_NAME)-$(BOOKSTORE_ENDPOINT_CONFIG_ID)-$(BOOKSTORE_GATEWAY_IMG_TAG) .
 
 
-.PHONE: bookstore-test-server-image
+.PHONY: bookstore-test-server-image
 bookstore-test-server-image: PORT := 50051
 bookstore-test-server-image:
 	docker container run --rm -it \
@@ -58,7 +58,7 @@ bookstore-test-server-image:
 
 
 
-.PHONE: bookstore-test-client-image
+.PHONY: bookstore-test-client-image
 bookstore-test-client-image: GATEWAY_HOST := bookstore-gateway-8fb0-duw6v5yogq-an.a.run.app
 bookstore-test-client-image:
 	openssl s_client -showcerts -connect $(GATEWAY_HOST):443 </dev/null 2>/dev/null | openssl x509 -outform PEM > miscs/ssl/gateway.pem
@@ -75,7 +75,7 @@ bookstore-test-client-image:
 
 
 
-.PHONE: bookstore-push-server-image
+.PHONY: bookstore-push-server-image
 bookstore-push-server-image: bookstore-build-server-image
 	@$(MAKE) gcloud-activate-configuration PROJECT_ID=$(BOOKSTORE_PROJECT_ID)
 	docker image tag \
@@ -85,7 +85,7 @@ bookstore-push-server-image: bookstore-build-server-image
 
 
 
-.PHONE: bookstore-push-client-image
+.PHONY: bookstore-push-client-image
 bookstore-push-client-image: bookstore-build-client-image
 	@$(MAKE) gcloud-activate-configuration PROJECT_ID=$(BOOKSTORE_PROJECT_ID)
 	docker image tag \
@@ -95,7 +95,7 @@ bookstore-push-client-image: bookstore-build-client-image
 
 
 
-.PHONE: bookstore-push-gateway-image
+.PHONY: bookstore-push-gateway-image
 bookstore-push-gateway-image: bookstore-build-gateway-image
 	$(eval BOOKSTORE_ENDPOINT_SERVICE_NAME := $(shell $(MAKE) gcloud-sdk CMD="gcloud endpoints services list" | grep bookstore))
 	$(eval BOOKSTORE_ENDPOINT_CONFIG_ID := $(shell $(MAKE) gcloud-sdk CMD="gcloud endpoints configs list --service=${BOOKSTORE_ENDPOINT_SERVICE_NAME} --limit 1 --format=\"value(id.scope())\""))
@@ -107,7 +107,7 @@ bookstore-push-gateway-image: bookstore-build-gateway-image
 
 
 
-.PHONE: bookstore-download-endpoint-service-config
+.PHONY: bookstore-download-endpoint-service-config
 bookstore-download-endpoint-service-config:
 	$(eval BOOKSTORE_ENDPOINT_SERVICE_NAME := $(shell $(MAKE) gcloud-sdk CMD="gcloud endpoints services list" | grep bookstore))
 	$(eval BOOKSTORE_ENDPOINT_CONFIG_ID := $(shell $(MAKE) gcloud-sdk CMD="gcloud endpoints configs list --service=${BOOKSTORE_ENDPOINT_SERVICE_NAME} --limit 1 --format=\"value(id.scope())\""))
@@ -120,6 +120,6 @@ bookstore-download-endpoint-service-config:
 		--format json" | grep -v make > $(BOOKSTORE_GATEWAY_SRC)/service.json
 
 
-.PHONE: bookstore-create-network
+.PHONY: bookstore-create-network
 bookstore-create-network:
 	docker network create bookstore

@@ -7,6 +7,7 @@ WORKFLOW_FLOOR_SRC	:= $(BASE_PATH)/gcp/cloudrun/workflow/services/floor
 WORKFLOW_FLOOR_IMG	:= floor
 WORKFLOW_FLOOR_TAG	:= 1.0.0
 
+
 .PHONY: workflow-gcloud-authenticate
 workflow-gcloud-authenticate:
 	@$(MAKE) gcloud-authenticate \
@@ -21,7 +22,7 @@ workflow-artifact-registry-authenticate:
 		HOSTNAMES=asia-northeast1-docker.pkg.dev
 
 
-.PHONE: workflow-archive-functions
+.PHONY: workflow-archive-functions
 workflow-archive-functions:
 	cd $(WORKFLOW_RANDOMGEN_SRC) && \
 		zip -r dist/randomgen-$(WORKFLOW_RANDOMGEN_TAG).zip main.py requirements.txt
@@ -29,7 +30,7 @@ workflow-archive-functions:
 		zip -r dist/multiply-$(WORKFLOW_MULTIPLY_TAG).zip main.py requirements.txt
 
 
-.PHONE: workflow-upload-functions
+.PHONY: workflow-upload-functions
 workflow-upload-functions: BUCKET := workflow-functions
 workflow-upload-functions:
 	@$(MAKE) gcloud-sdk CMD="gsutil cp /dist/randomgen-$(WORKFLOW_RANDOMGEN_TAG).zip gs://$(BUCKET)" \
@@ -38,13 +39,14 @@ workflow-upload-functions:
 		ADDITIONAL_VOLUMES="-v $(WORKFLOW_MULTIPLY_SRC)/dist:/dist"
 
 
-.PHONE: workflow-build-floor-image
+.PHONY: workflow-build-floor-image
 workflow-build-floor-image:
 	cd $(WORKFLOW_FLOOR_SRC) && \
 		docker image build -t \
 		$(WORKFLOW_FLOOR_IMG):$(WORKFLOW_FLOOR_TAG) .
 
-.PHONE: workflow-test-floor-image
+
+.PHONY: workflow-test-floor-image
 workflow-test-floor-image: PORT := 8080
 workflow-test-floor-image: workflow-build-floor-image
 	@cd $(WORKFLOW_FLOOR_SRC) && \
@@ -54,7 +56,8 @@ workflow-test-floor-image: workflow-build-floor-image
 			-p $(PORT):$(PORT) \
 			$(WORKFLOW_FLOOR_IMG):$(WORKFLOW_FLOOR_TAG)
 
-.PHONE: workflow-push-floor-image
+
+.PHONY: workflow-push-floor-image
 workflow-push-floor-image: workflow-build-floor-image
 	@$(MAKE) gcloud-activate-configuration PROJECT_ID=$(WORKFLOW_PROJECT_ID)
 	docker image tag \
